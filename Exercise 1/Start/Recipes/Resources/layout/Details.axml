@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+	android:layout_margin="20dp">
+
+<!-- Replace in Exercise 1 -->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+		<ImageView
+			android:layout_width="24dp"
+			android:layout_height="24dp" 
+			android:layout_gravity="center"
+			android:src="@drawable/ic_local_dining_white_24dp" />		
+		<TextView
+			android:id="@+id/nameTextView"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center" />
+	</LinearLayout>
+
+<!-- Replace in Exercise 2 -->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+		<ToggleButton
+			android:id="@+id/favoriteButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:textOff=""
+			android:textOn=""
+			android:textSize="0dp" />
+		<Button
+			android:id="@+id/aboutButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:text="About" />
+	</LinearLayout>
+		
+<!-- Replace in Exercise 3 -->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+		<Button
+			android:id="@+id/oneServingButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="1" />
+		<Button
+			android:id="@+id/twoServingsButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="2" />
+		<Button
+			android:id="@+id/fourServingsButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="4" />
+	</LinearLayout>
+
+<!-- Replace in Exercise 5 -->
+	<ImageButton
+		android:id="@+id/backButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:src="@drawable/ic_arrow_back_white_24dp" />
+
+	<ListView
+		android:id="@+id/ingredientsListView"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" />
+
+</LinearLayout>

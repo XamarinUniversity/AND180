@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<menu
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app    ="http://schemas.android.com/apk/res-auto">
+
+	<item
+		android:id      ="@+id/addToFavorites"
+		android:title   ="Add to Favorites"
+		app:showAsAction="always" />
+
+	<item
+		android:title="Servings"
+		android:icon="@drawable/ic_people_white_24dp"
+		app:showAsAction="always">			
+		<menu>
+			<group android:checkableBehavior="single">
+				<item
+			      android:id     ="@+id/oneServing"
+			      android:title  ="1 serving" 
+				  android:checked="true" />
+				<item
+			      android:id     ="@+id/twoServings"
+			      android:title  ="2 servings" />
+				<item
+			      android:id     ="@+id/fourServings"
+			      android:title  ="4 servings" />
+			</group>
+		</menu>
+	</item>
+	
+	<item
+		android:id      ="@+id/about"
+		android:title   ="About"
+		app:showAsAction="never" />
+
+</menu>
