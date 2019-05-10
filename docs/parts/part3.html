@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+    <title>Add a checkable submenu</title>
+    <link rel="stylesheet" type="text/css" href="./res/styles/normalize.css">
+    <link rel="stylesheet" type="text/css" href="./res/styles/prettify.css" />
+    <link rel="stylesheet" type="text/css" href="./res/styles/styles.css">
+</head>
+
+<body>
+<!-- ************************************************************************************************************** -->
+
+    <header>AND180 - Toolbar and App Bar</header>
+
+    <section id="main">
+
+        <h1 id="page-title"></h1>
+
+<!-- ************************************************************************************************************** -->
+
+        <h2>Duration</h2>
+        <p>10 minutes</p>
+
+<!-- ************************************************************************************************************** -->
+
+        <h2>Goals</h2>
+
+        <p>
+            The primary goal of this lab is to use XML to define a checkable sub-menu inside a Toolbar's Actions menu.
+            The image below shows the current state of the Recipes app after the completion of Exercise 2.
+            In this exercise, your goal is to work on the highlighted area.
+        </p>
+
+        <img src="res/images/EX3_Start.png" width="320" alt="" style='border:1px solid #999999'/></div>
+
+        <p>
+            You will add a new entry to the existing XML menu file to define a sub-menu for the "number of servings"
+            action. This action will then appear inside the toolbar so you will be able to remove the buttons
+            used in the current implementation. When you are done, the app should look like the
+            images below. The image on the left shows the "number of servings" action in the toolbar (the "people" icon).
+            The image on the right shows the UI after clicking on the "people" icon to open the submenu.
+            The sub-menu's three entries are radio buttons since they are mutually exclusive (i.e. you would
+            not simultaneously select both 1 serving and 4 servings for a recipe).
+        </p>
+
+        <img src="res/images/EX3_Completed.png" width="640" alt="" style='border:1px solid #999999'/></div>
+
+<!-- ************************************************************************************************************** -->
+
+        <h2>Required assets</h2>
+        <p>
+            This is a continuation of the previous exercise. 
+            You can use your existing solution or open the solution in the <strong>Exercise 2/Completed</strong> folder. 
+            The <strong>Exercise 3</strong> folder contains a subfolder named <strong>Completed</strong> with a solution
+            you can use to check your work. Please make sure you have these folders before you begin. 
+        </p>
+
+<!-- ************************************************************************************************************** -->
+
+        <h2>Challenge</h2>
+        <p>
+            <ol>
+                <li>
+                    Add a single-checkable sub-menu to <strong>actions.xml</strong>. The sub-menu needs three
+                    items: 1 serving, 2 servings, and 4 servings. Give each sub-menu item an id so they can
+                    be identified from code.
+                </li>
+
+                <li>
+                    Modify your handler for the toolbar's <code>MenuItemClick</code> event so it sets the number of servings
+                    appropriately when each of the sub-menu items are clicked. You must also set the checked state of
+                    the selected menu item to <code>true</code>.
+                </li>
+
+                <li>
+                    Remove the previous implementation (the XML for the buttons and the corresponding code).
+                </li>
+            </ol>
+        </p>
+
+<!-- ************************************************************************************************************** -->
+
+        <h1>Steps</h1>
+
+        <h2>Define the sub-menu</h2>
+        <ol>
+            <li>
+                Open <strong>actions.xml</strong>.
+            </li>
+
+            <li>
+                Add the following XML to the <strong>actions.xml</strong> file after the existing "Add to Favorites" 
+                action. Notice how the top-level <code>item</code> has a nested <code>menu</code> - this is what creates
+                a sub-menu that pops up when the user selects the top-level item.
+                Also, note that it uses a single-checkable group - it's the "single" option that creates radio buttons
+                in the sub-menu. Finally, notice that the serving items are given ids so they can be identified from code.
+<pre class="prettyprint codeblock">
+&lt;item
+   android:title="Servings"
+   android:icon="@drawable/ic_people_white_24dp"
+   app:showAsAction="always"&gt;			
+   &lt;menu&gt;
+      &lt;group android:checkableBehavior="single"&gt;
+         &lt;item
+            android:id     ="@+id/oneServing"
+            android:title  ="1 serving"
+            android:checked="true" /&gt;
+         &lt;item
+            android:id     ="@+id/twoServings"
+            android:title  ="2 servings" /&gt;
+         &lt;item
+            android:id     ="@+id/fourServings"
+            android:title  ="4 servings" /&gt;
+      &lt;/group&gt;
+   &lt;/menu&gt;
+&lt;/item&gt;
+</pre>
+            </li>
+        </ol>
+
+        <h2>Handle sub-menu click</h2>
+        <ol>
+            <li>
+                Open <strong>DetailsActivity.cs</strong>.
+            </li>
+
+            <li>
+                Locate your existing handler for the toolbar's <code>MenuItemClick</code> event. You will be adding code to this method.
+            </li>
+
+            <li>
+                Add three new cases to the existing <code>switch</code> statement: <code>oneServing</code>, <code>twoServings</code>,
+                and <code>fourServings</code>. Inside each case, call the <code>SetServings</code> method passing the appropriate
+                number of servings (1, 2, or 4). 
+                
+                In addition, you must programmatically set single-checkable items to the checked state using the <code>SetChecked</code>
+                method of the menu item (note that the other items in the group will be unset automatically).
+                
+                The code for the new part of the click handler is given below.
+<p><a href="#" onclick="toggleCode(this,'Handler');return false;" class="uiitem">Show Code</a>
+<div class="indent-medium" id="Handler" style="display:none;">
+<pre class="prettyprint">
+void OnMenuItemClick(object sender, Android.Support.V7.Widget.Toolbar.MenuItemClickEventArgs e)
+{
+   switch (e.Item.ItemId)
+   {
+      // ...
+      case Resource.Id.oneServing:   SetServings(1); e.Item.SetChecked(true); break;
+      case Resource.Id.twoServings:  SetServings(2); e.Item.SetChecked(true); break;
+      case Resource.Id.fourServings: SetServings(4); e.Item.SetChecked(true); break;
+      // ...
+   }
+}
+</pre></div>
+</p>
+            </li>
+        </ol>
+
+        <h2>Remove unneeded code</h2>
+        <ol>
+            <li>
+                Open <strong>Details.axml</strong>.
+            </li>
+
+            <li>
+                Remove the nested <code>LinearLayout</code> that defines the "serving" buttons.
+            </li>
+
+            <li>
+                Open <strong>DetailsActivity.cs</strong>.
+            </li>
+
+            <li>
+                Remove the click handlers for the three "serving" buttons.
+<pre class="prettyprint">
+FindViewById&lt;Button&gt;(Resource.Id.oneServingButton).Click   += (sender, e) => SetServings(1);
+FindViewById&lt;Button&gt;(Resource.Id.twoServingsButton).Click  += (sender, e) => SetServings(2);
+FindViewByIdvButton&gt;(Resource.Id.fourServingsButton).Click += (sender, e) => SetServings(4);
+</pre>
+            </li>
+        </ol>
+
+<!-- ************************************************************************************************************** -->
+
+        <h1>Summary</h1>
+        <p>
+            This exercise showed you how to implement a sub-menu of radio buttons. To create a sub-menu, you added
+            a <code>menu</code> inside an existing <code>item</code>. To make the sub-menu use radio buttons, you
+            used a <code>group</code> with <code>checkableBehavior</code> set to <code>single</code>.
+        </p>
+        <div class="align-right">
+            <a href="../Start%20Here.html">Go Back</a>
+        </div>
+    </section>
+
+<!-- ************************************************************************************************************** -->
+
+    <script src="./res/js/jquery.min.js"></script>
+    <script src="./res/js/prettify.js"></script>
+    <script src="./res/js/script.js"></script>
+
+    <footer>Copyright (C) 2018 Xamarin Inc., Microsoft.</footer>
+</body>
+</html>

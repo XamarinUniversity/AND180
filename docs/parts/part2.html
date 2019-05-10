@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+    <title>Populate Toolbar Actions from an XML menu file</title>
+    <link rel="stylesheet" type="text/css" href="./res/styles/normalize.css">
+    <link rel="stylesheet" type="text/css" href="./res/styles/prettify.css" />
+    <link rel="stylesheet" type="text/css" href="./res/styles/styles.css">
+</head>
+
+<body>
+<!-- ************************************************************************************************************** -->
+
+    <header>AND180 - Toolbar and App Bar</header>
+
+    <section id="main">
+
+        <h1 id="page-title"></h1>
+
+<!-- ************************************************************************************************************** -->
+
+        <h2>Duration</h2>
+        <p>15 minutes</p>
+
+<!-- ************************************************************************************************************** -->
+
+        <h2>Goals</h2>
+
+        <p>
+            The primary goal of this lab is to use XML to define the entries in a Toolbar's Actions menu.
+            The image below shows the current state of the Recipes app after the completion of Exercise 1.
+            In this exercise, your goal is to work on the highlighted area.
+        </p>
+
+        <img src="res/images/EX2_Start.png" width="320" alt="" style='border:1px solid #999999'/></div>
+
+        <p>
+            You will use an XML menu file to define menu items for the "favorite" and "about" actions.
+            These actions will then appear inside the toolbar so you will be able to remove the buttons
+            used in the current implementation. When you are done, the app should look like the
+            image below - the "favorite" action is shown in the toolbar while the "about"
+            action is hidden inside the toolbar's overflow area.
+        </p>
+
+        <img src="res/images/EX2_Completed.png" width="320" alt="" style='border:1px solid #999999'/></div>
+
+<!-- ************************************************************************************************************** -->
+
+        <h2>Required assets</h2>
+        <p>
+            This is a continuation of the previous exercise. 
+            You can use your existing solution or open the solution in the <strong>Exercise 1/Completed</strong> folder. 
+            The <strong>Exercise 2</strong> folder contains a subfolder named <strong>Completed</strong> with a solution
+            you can use to check your work. Please make sure you have these folders before you begin. 
+        </p>
+
+<!-- ************************************************************************************************************** -->
+
+        <h2>Challenge</h2>
+        <p>
+            <ol>
+                <li>Create a new sub-folder named <strong>menu</strong> inside your app's <strong>Resources</strong> folder.</li>
+                <li>Create a new XML file named <strong>actions.xml</strong> inside the <strong>menu</strong> folder.</li>
+                <li>Populate the <strong>actions.xml</strong> file with an Android menu containing two items:
+                one for "favorite" that will always be shown on the menu and one for "about" that will appear
+                only in the overflow area.</li>
+                <li>Inflate the menu from code.</li>
+                <li>Respond to menu-item click events. For the "favorite" action you should toggle the current recipe's
+                    <code>IsFavorite</code> property and update the image on the menu item to match. For the "about"
+                    action you should navigate the app to the <strong>AboutActivity</strong>.
+                </li>
+                <li>Remove the previous implementation of "favorite" and "about" (the XML for the buttons and the corresponding code).</li>
+            </ol>
+        </p>
+
+<!-- ************************************************************************************************************** -->
+
+        <h1>Steps</h1>
+
+        <h2>Define the menu file</h2>
+        <ol>
+            <li>
+                Create a new sub-folder named <strong>menu</strong> inside your app's <strong>Resources</strong> folder.
+            </li>
+
+            <li>
+                Create a new XML file named <strong>actions.xml</strong> inside the <strong>menu</strong> folder.
+            </li>
+
+            <li>
+                Add the following XML to the <strong>actions.xml</strong> file. Notice how it defines two actions:
+                one for "favorite" that will appear on the toolbar and one for "about" that will be in the overflow
+                area. Also, note that the items are given ids so they can be identified from code.
+<pre class="prettyprint codeblock">
+&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;menu
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app    ="http://schemas.android.com/apk/res-auto"&gt;
+   &lt;item
+      android:id      ="@+id/addToFavorites"
+      android:title   ="Add to Favorites"
+      app:showAsAction="always" /&gt;
+   &lt;item
+      android:id      ="@+id/about"
+      android:title   ="About"
+      app:showAsAction="never" /&gt;
+&lt;/menu&gt;
+</pre>
+            </li>
+        </ol>
+
+        <h2>Inflate the toolbar items</h2>
+        <ol>
+            <li>
+                Open <strong>DetailsActivity.cs</strong>.
+            </li>
+
+            <li>
+                Call the <code>InflateMenu</code> method on the toolbar to populate its Actions menu
+                - pass <code>Resource.Menu.actions</code> as the parameter. The code is shown below.
+<p><a href="#" onclick="toggleCode(this,'Inflate');return false;" class="uiitem">Show Code</a>
+<div class="indent-medium" id="Inflate" style="display:none;">
+<pre class="prettyprint">
+toolbar.InflateMenu(Resource.Menu.actions);
+</pre></div>
+</p>
+            </li>
+        </ol>
+
+        <h2>Handle menu click</h2>
+        <ol>
+            <li>
+                Subscribe to the toolbar's <code>MenuItemClick</code> event.
+<pre class="prettyprint codeblock">
+toolbar.MenuItemClick += OnMenuItemClick;
+</pre>
+                
+                The required method signature is shown below.
+<pre class="prettyprint codeblock">
+void OnMenuItemClick(object sender, Android.Support.V7.Widget.Toolbar.MenuItemClickEventArgs e)
+{
+}
+</pre>
+            </li>
+
+            <li>
+                In your handler, add a <code>switch</code> statement that tests the value of the parameter
+                <code>e.Item.ItemId</code>. This will be the id of the menu items defined in the XML file.
+            </li>
+
+            <li>
+                Add a case for <code>Resource.Id.addToFavorites</code> to the <code>switch</code> statement.
+                Inside this case you should toggle the value of the current recipe's <code>IsFavorite</code>
+                property and then update the image to reflect the new favorite status (you can use the
+                existing <code>SetFavoriteDrawable</code> method to load the new image).
+            </li>
+
+            <li>
+                Replace the <code>SetFavoriteDrawable</code> method with the following implementation.
+                This change is needed because we are now swapping the image on a menu item instead of a toggle button.
+<pre class="prettyprint codeblock">
+void SetFavoriteDrawable(bool isFavorite)
+{
+   if (isFavorite)
+      toolbar.Menu.FindItem(Resource.Id.addToFavorites).SetIcon(Resource.Drawable.ic_favorite_white_24dp); // filled in 'heart' image
+   else
+      toolbar.Menu.FindItem(Resource.Id.addToFavorites).SetIcon(Resource.Drawable.ic_favorite_border_white_24dp); // 'heart' image border only
+}
+</pre>
+            </li>
+
+            <li>
+                Add a case for <code>Resource.Id.about</code> to the <code>switch</code> statement.
+                Inside this case you should launch the <strong>AboutActivity</strong>. 
+                The code for the completed click handler is given below.
+<p><a href="#" onclick="toggleCode(this,'Handler');return false;" class="uiitem">Show Code</a>
+<div class="indent-medium" id="Handler" style="display:none;">
+<pre class="prettyprint">
+void OnMenuItemClick(object sender, Android.Support.V7.Widget.Toolbar.MenuItemClickEventArgs e)
+{
+   switch (e.Item.ItemId)
+   {
+      case Resource.Id.addToFavorites:
+      recipe.IsFavorite = !recipe.IsFavorite;
+      SetFavoriteDrawable(recipe.IsFavorite);
+      break;
+
+      case Resource.Id.about:
+      StartActivity(typeof(AboutActivity));
+      break;
+   }
+}
+</pre></div>
+</p>
+            </li>
+        </ol>
+
+        <h2>Remove unneeded code</h2>
+        <ol>
+            <li>
+                Open <strong>Details.axml</strong>.
+            </li>
+
+            <li>
+                Remove the nested <code>LinearLayout</code> that defines the "favorite" <code>ToggleButton</code>
+                and the "about" <code>Button</code>.
+            </li>
+
+            <li>
+                Open <strong>DetailsActivity.cs</strong>.
+            </li>
+
+            <li>
+                Remove all the code dealing with the "favorite" <code>ToggleButton</code>
+                (i.e. the <code>CheckedChange</code> event subscription and the <code>OnFavoriteCheckedChange</code> handler).
+<pre class="prettyprint">
+// subscription
+var toggle = FindViewById&lt;ToggleButton&gt;(Resource.Id.favoriteButton);
+toggle.CheckedChange += OnFavoriteCheckedChange;
+
+// handler
+void OnFavoriteCheckedChange(object sender, CompoundButton.CheckedChangeEventArgs e)
+{
+   recipe.IsFavorite = e.IsChecked; // update the recipe's state
+
+   SetFavoriteDrawable(e.IsChecked); // toggle the image used on the button
+}
+</pre>
+            </li>
+
+            <li>
+                Remove the entire line of code that handles the "about" button's <code>Click</code> event:
+<pre class="prettyprint">
+FindViewById&lt;Button&gt;(Resource.Id.aboutButton).Click += (sender, e) => StartActivity(typeof(AboutActivity));
+</pre>
+            </li>
+        </ol>
+
+<!-- ************************************************************************************************************** -->
+
+        <h1>Summary</h1>
+        <p>
+            This exercise asked you to use an XML file to define the entries for a toolbar's Actions menu.
+            We used the standard Android menu-file format so the techniques you learned here can be applied
+            to other Android menus as well. 
+        </p>
+        <div class="align-right">
+            <a href="../Start%20Here.html">Go Back</a>
+        </div>
+    </section>
+
+<!-- ************************************************************************************************************** -->
+
+    <script src="./res/js/jquery.min.js"></script>
+    <script src="./res/js/prettify.js"></script>
+    <script src="./res/js/script.js"></script>
+
+    <footer>Copyright (C) 2018 Xamarin Inc., Microsoft.</footer>
+</body>
+</html>
