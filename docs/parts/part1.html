@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+    <title>Add a Toolbar to an Activity</title>
+    <link rel="stylesheet" type="text/css" href="./res/styles/normalize.css">
+    <link rel="stylesheet" type="text/css" href="./res/styles/prettify.css" />
+    <link rel="stylesheet" type="text/css" href="./res/styles/styles.css">
+</head>
+
+<body>
+<!-- ************************************************************************************************************** -->
+
+    <header>AND180 - Toolbar and App Bar</header>
+
+    <section id="main">
+
+        <h1 id="page-title"></h1>
+
+<!-- ************************************************************************************************************** -->
+
+        <h2>Duration</h2>
+        <p>15 minutes</p>
+
+<!-- ************************************************************************************************************** -->
+
+        <h2>Goals</h2>
+
+        <p>
+            The goal of this lab is to add a Toolbar to an Activity and set its logo and title. 
+        </p>
+
+        <p>
+            You will be working on a supplied <strong>Recipes</strong> app. The image below shows the app's three Activities
+            as they exist in the supplied starter code. All your work will be done in the <strong>DetailsActivity</strong>.
+            You will rewrite the implementation of the highlighted area in the <strong>DetailsActivity</strong>
+            so it uses a <code>Toolbar</code>. This rewrite will be done one piece at a time throughout the exercises
+            for this course.
+        </p>
+
+        <img src="res/images/Ex1_Start.png" width="720" alt="" style='border:1px solid #999999'/>
+
+        <p>
+            The image below shows the completed app at the end of the course. Notice how the user actions
+            have been relocated to a <code>Toolbar</code> (some of the actions are not visible because they
+            are in a sub-menu or in the <code>Toolbar</code>'s overflow area).
+        </p>
+
+        <img src="res/images/Ex5_Completed.png" width="720" alt="" style='border:1px solid #999999'/>
+
+        <p>
+            In this first exercise, you will add a <code>Toolbar</code> to the <strong>DetailsActivity</strong>
+            and set its logo and title. This will let you remove the <code>ImageView</code> and <code>TextView</code>
+            currenty used to display that information.
+        </p>
+
+<!-- ************************************************************************************************************** -->
+
+        <h2>Required assets</h2>
+        <p>
+            The provided <strong>Exercise 1</strong> folder contains a subfolder named <strong>Start</strong> 
+            with the starter project you will use for this lab. It also contains a <strong>Completed</strong> folder
+            with a solution you can use to check your work. Please make sure you have this folder before you begin.
+        </p>
+
+<!-- ************************************************************************************************************** -->
+
+        <h2>Challenge</h2>
+        <p>
+            <ol>
+                <li>Open the provided <strong>Recipes</strong> solution in the <strong>Exercise 1/Start</strong> folder.</li>
+                <li>In <strong>Details.axml</strong>, add a <code>Toolbar</code> as the first element - give it an id so it can be accessed from code.</li>
+                <li>Set the toolbar's <code>logo</code> to <code>@drawable/ic_local_dining_white_24dp</code>.</li>
+                <li>In <strong>DetailsActivity.cs</strong>, store a reference to the toolbar in a field, then set its <code>Title</code> to the <code>Name</code> of the recipe.</li>
+                <li>Remove any unneeded UI elements and code.</li>
+            </ol>
+        </p>
+
+<!-- ************************************************************************************************************** -->
+
+        <h1>Steps</h1>
+
+        <h2>Run the starter solution</h2>
+        <ol>
+            <li>
+                Open the provided <strong>Recipes</strong> solution in the <strong>Exercise 1/Start</strong> folder.
+            </li>
+
+            <li>
+                Run the app.
+            </li>
+
+            <li>
+                The <strong>MainActivity</strong> lists a few recipes. To keep the app simple, the recipe data is hardcoded.
+            </li>
+
+            <li>
+                Select one of the recipes to navigate the app to the <strong>DetailsActivity</strong>. 
+            </li>
+
+            <li>
+                Use the <strong>About</strong> button to navigate to the <strong>AboutActivty</strong> then 
+                use the Android back button to return to the <strong>DetailsActivity</strong>.
+            </li>
+
+            <li>
+                Try the "1", "2", and "4" buttons to change the number of servings and notice how the ingredient amounts
+                are updated in the UI.
+            </li>
+
+            <li>
+                Click the "heart" button to select this recipe as one of your favorites. Notice how the image used on
+                the button changes. 
+            </li>
+
+            <li>
+                Click the "arrow" button to return to the <strong>MainActivity</strong>. Any recipes marked as "favorite"
+                will have an asterisk included in their listing.
+            </li>
+
+            <li>
+                To keep the app simple, your "favorites" are not persisted; that is, if you re-run the app, all the recipe
+                data such as the Boolean used to indicate a "favorite" and the number of servings will be reset to the
+                hardcoded values.
+            </li>
+        </ol>
+
+        <h2>Add a Toolbar to the DetailsActivity</h2>
+        <ol>
+            <li>
+                Continue working in the provided <strong>Recipes</strong> solution from the <strong>Exercise 1/Start</strong> folder.
+            </li>
+            
+            <li>
+                Open the <strong>Resources/layout/Details.axml</strong> file using the <strong>Source</strong> editor.
+            </li>
+
+            <li>
+                Add an <code>android.support.v7.widget.Toolbar</code> as the first element inside the root <code>LinearLayout</code>.
+            </li>
+
+            <li>
+                Set the toolbar's <code>layout_width</code> to <code>match_parent</code> and its <code>layout_height</code> to <code>wrap_content</code>.
+            </li>
+
+            <li>
+                Give the toolbar an <strong>id</strong> (<code>android:id="@+id/toolbar"</code>).
+            </li>
+
+            <li>
+                The starter code has already defined the <code>app</code> prefix. Use it to set the toolbar's <code>logo</code>
+                to <code>@drawable/ic_local_dining_white_24dp</code>.
+            </li>
+
+            <li>
+                The completed code for the above steps is provided below.
+<p><a href="#" onclick="toggleCode(this,'AddToolbar');return false;" class="uiitem">Show Code</a>
+<div class="indent-medium" id="AddToolbar" style="display:none;">
+<pre class="prettyprint">
+&lt;android.support.v7.widget.Toolbar
+   android:layout_width="match_parent"
+   android:layout_height="wrap_content"
+   android:id="@+id/toolbar"
+   app:logo="@drawable/ic_local_dining_white_24dp" /&gt;
+</pre></div>
+</p>
+            </li>
+
+            <li>
+                Remove the first nested <code>LinearLayout</code> from the <strong>Details.axml</strong> file.
+                You will be showing the logo and recipe name in the toolbar so this is no longer needed.
+            </li>
+        </ol>
+
+        <h2>Set the Toolbar's title</h2>
+        <ol>
+            <li>
+                Open the <strong>DetailsActivity.cs</strong> file.
+            </li>
+
+            <li>
+                In <code>OnCreate</code>, use <code>FindViewById</code> to get a reference to the <code>Toolbar</code>
+                and store the reference in a field. The code is shown below.
+<p><a href="#" onclick="toggleCode(this,'GetToolbar');return false;" class="uiitem">Show Code</a>
+<div class="indent-medium" id="GetToolbar" style="display:none;">
+<pre class="prettyprint">
+// Field declaration
+Android.Support.V7.Widget.Toolbar toolbar;
+
+// Element lookup
+toolbar = FindViewById&lt;Android.Support.V7.Widget.Toolbar&gt;(Resource.Id.toolbar);
+</pre></div>
+</p>
+            </li>
+
+            <li>
+                We will use the recipe name as the title of the toolbar. Since this will be different for each recipe,
+                we will set the title in code rather than in XML.
+                In <code>OnCreate</code>, set the toolbar's <code>Title</code> to the <code>Name</code> of the recipe.
+                The code is shown below.
+<p><a href="#" onclick="toggleCode(this,'SetTitle');return false;" class="uiitem">Show Code</a>
+<div class="indent-medium" id="SetTitle" style="display:none;">
+<pre class="prettyprint">
+toolbar.Title = recipe.Name;
+</pre></div>
+</p>
+            </li>
+
+            <li>
+                In <code>OnCreate</code>, remove the code that loaded the recipe name into a <code>TextView</code>
+                (see below).
+<pre class="prettyprint">
+var name = FindViewById&lt;TextView&gt;(Resource.Id.nameTextView);
+name.Text = recipe.Name;
+</pre>
+            </li>
+
+            <li>
+                Run the app to test your work. The logo and recipe name on the <strong>DetailsActivity</strong> should
+                now be displayed in a toolbar (see below).
+                <img src="res/images/Ex1_Completed.png" width="240" alt="" style='border:1px solid #999999'/>
+            </li>
+        </ol>
+
+<!-- ************************************************************************************************************** -->
+
+        <h1>Summary</h1>
+        <p>
+            In this exercise, you added <code>Toolbar</code> to an Activity. You set two properties on the toolbar:
+            the <code>logo</code> was static so you could set it in XML while the <code>Title</code> was
+            data-dependent so you needed to set it in code. 
+        </p>
+        <div class="align-right">
+            <a href="../Start%20Here.html">Go Back</a>
+        </div>
+    </section>
+
+<!-- ************************************************************************************************************** -->
+
+    <script src="./res/js/jquery.min.js"></script>
+    <script src="./res/js/prettify.js"></script>
+    <script src="./res/js/script.js"></script>
+
+    <footer>Copyright (C) 2018 Xamarin Inc., Microsoft.</footer>
+</body>
+</html>
